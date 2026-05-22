@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaCare — Human-AI Collaboration in Healthcare | Nova Scotia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Playfair+Display:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --nc-deep: #0a1628;
+            --nc-navy: #0f2240;
+            --nc-blue: #1a5276;
+            --nc-teal: #17a2b8;
+            --nc-mint: #20c997;
+            --nc-white: #f0f4f8;
+            --nc-light: #d6e4f0;
+            --nc-muted: #8fa8c8;
+            --nc-accent: #00e5a0;
+            --nc-red: #e74c3c;
+            --nc-orange: #f39c12;
+            --nc-green: #27ae60;
+            --nc-card: rgba(15, 34, 64, 0.6);
+            --nc-glass: rgba(255,255,255,0.06);
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--nc-deep);
+            color: var(--nc-white);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(23,162,184,0.03) 1px, transparent 1px),
+                linear-gradient(rgba(23,162,184,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+        .section { padding: 100px 0; }
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--nc-teal);
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--nc-white);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .section-subtitle {
+            color: var(--nc-muted);
+            font-size: 1.05rem;
+            max-width: 680px;
+            margin-bottom: 48px;
+        }
+
+        /* ─── Hero ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -20%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(23,162,184,0.15), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(32,201,151,0.1), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--nc-glass);
+            border: 1px solid rgba(23,162,184,0.3);
+            border-radius: 999px;
+            padding: 6px 16px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--nc-teal);
+            letter-spacing: 1px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(8px);
+        }
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--nc-accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.6rem, 6vw, 4.2rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--nc-teal), var(--nc-mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--nc-muted);
+            max-width: 580px;
+            margin-bottom: 40px;
+        }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 16px; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.25s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--nc-teal), var(--nc-mint));
+            color: var(--nc-deep);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(23,162,184,0.3); }
+        .btn-outline {
+            background: transparent;
+            color: var(--nc-teal);
+            border: 1px solid rgba(23,162,184,0.4);
+        }
+        .btn-outline:hover { background: rgba(23,162,184,0.1); }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .hero-stat-value {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--nc-accent);
+        }
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--nc-muted);
+            margin-top: 4px;
+        }
+
+        /* ─── Nav ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(10,22,40,0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--nc-white);
+            text-decoration: none;
+        }
+        .nav-logo span { color: var(--nc-teal); }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a {
+            color: var(--nc-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--nc-white); }
+
+        /* ─── Origin Story ─── */
+        .origin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+        .origin-card {
+            background: var(--nc-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 32px;
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .origin-card:hover { transform: translateY(-4px); border-color: rgba(23,162,184,0.3); }
+        .origin-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--nc-white);
+        }
+        .origin-card p { color: var(--nc-muted); font-size: 0.95rem; }
+        .origin-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+        }
+        .icon-blue { background: rgba(23,162,184,0.15); }
+        .icon-green { background: rgba(32,201,151,0.15); }
+        .icon-orange { background: rgba(243,156,18,0.15); }
+        .icon-red { background: rgba(231,76,60,0.15); }
+
+        /* ─── Problem Section ─── */
+        .problem-statement {
+            background: linear-gradient(135deg, rgba(231,76,60,0.08), rgba(243,156,18,0.06));
+            border: 1px solid rgba(231,76,60,0.2);
+            border-radius: 16px;
+            padding: 40px 48px;
+            margin-bottom: 48px;
+        }
+        .problem-statement h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            color: var(--nc-white);
+        }
+        .problem-statement p {
+            color: var(--nc-light);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        .problem-statement p + p { margin-top: 14px; }
+        .problem-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        .problem-stat {
+            background: var(--nc-card);
+            border: 1px solid rgba(231,76,60,0.15);
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+        }
+        .problem-stat .big-num {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--nc-red);
+        }
+        .problem-stat .stat-desc {
+            color: var(--nc-muted);
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+        .problem-consequences {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+        .consequence {
+            background: var(--nc-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+        }
+        .consequence-icon {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .consequence h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--nc-white);
+        }
+        .consequence p {
+            font-size: 0.82rem;
+            color: var(--nc-muted);
+        }
+
+        /* ─── Features ─── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: var(--nc-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-4px); border-color: rgba(23,162,184,0.3); }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+        .feature-card.emergency::before { background: linear-gradient(90deg, var(--nc-red), #c0392b); }
+        .feature-card.urgent::before { background: linear-gradient(90deg, var(--nc-orange), #e67e22); }
+        .feature-card.moderate::before { background: linear-gradient(90deg, var(--nc-teal), #2980b9); }
+        .feature-card.selfcare::before { background: linear-gradient(90deg, var(--nc-green), #2ecc71); }
+        .feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+        .feature-card p { color: var(--nc-muted); font-size: 0.9rem; }
+        .triage-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .tag-red { background: rgba(231,76,60,0.15); color: var(--nc-red); }
+        .tag-orange { background: rgba(243,156,18,0.15); color: var(--nc-orange); }
+        .tag-blue { background: rgba(23,162,184,0.15); color: var(--nc-teal); }
+        .tag-green { background: rgba(39,174,96,0.15); color: var(--nc-green); }
+
+        /* ─── Human-AI ─── */
+        .hai-banner {
+            background: linear-gradient(135deg, rgba(23,162,184,0.1), rgba(32,201,151,0.08));
+            border: 1px solid rgba(23,162,184,0.2);
+            border-radius: 16px;
+            padding: 40px 48px;
+            margin-top: 48px;
+        }
+        .hai-banner h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: 14px;
+            color: var(--nc-white);
+        }
+        .hai-banner p {
+            color: var(--nc-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .hai-pillars {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .hai-pillar {
+            text-align: center;
+            padding: 16px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .hai-pillar .pillar-icon { font-size: 1.4rem; margin-bottom: 8px; }
+        .hai-pillar h4 { font-size: 0.85rem; color: var(--nc-white); margin-bottom: 4px; }
+        .hai-pillar p { font-size: 0.78rem; color: var(--nc-muted); }
+
+        /* ─── User Journey ─── */
+        .journey-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+        .journey-step {
+            background: var(--nc-card);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 18px 22px;
+            flex: 1;
+            min-width: 160px;
+            text-align: center;
+        }
+        .journey-step .step-num {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--nc-teal);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        .journey-step .step-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--nc-white);
+        }
+        .journey-arrow {
+            color: var(--nc-teal);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* ─── Deliverables ─── */
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .deliverable {
+            background: var(--nc-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 24px;
+            transition: border-color 0.3s;
+        }
+        .deliverable:hover { border-color: rgba(23,162,184,0.3); }
+        .deliverable h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--nc-white);
+        }
+        .deliverable p { font-size: 0.82rem; color: var(--nc-muted); }
+
+        /* ─── MoSCoW ─── */
+        .moscow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .moscow-col {
+            background: var(--nc-card);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .moscow-col h4 {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid;
+        }
+        .moscow-col.must h4 { color: var(--nc-red); border-color: var(--nc-red); }
+        .moscow-col.should h4 { color: var(--nc-orange); border-color: var(--nc-orange); }
+        .moscow-col.could h4 { color: var(--nc-teal); border-color: var(--nc-teal); }
+        .moscow-col.wont h4 { color: var(--nc-muted); border-color: var(--nc-muted); }
+        .moscow-col ul { list-style: none; padding: 0; }
+        .moscow-col li {
+            font-size: 0.85rem;
+            color: var(--nc-light);
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .moscow-col li::before {
+            content: '›';
+            color: var(--nc-teal);
+            margin-right: 8px;
+            font-weight: 700;
+        }
+
+        /* ─── Gap / Evaluation ─── */
+        .eval-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+        .eval-card {
+            background: var(--nc-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 32px;
+        }
+        .eval-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            margin-bottom: 16px;
+        }
+        .eval-card ul { list-style: none; padding: 0; }
+        .eval-card li {
+            font-size: 0.88rem;
+            color: var(--nc-muted);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            gap: 10px;
+        }
+        .eval-card li::before {
+            content: '△';
+            color: var(--nc-orange);
+            flex-shrink: 0;
+        }
+
+        /* ─── Challenge NS ─── */
+        .challenge-banner {
+            background: linear-gradient(135deg, rgba(23,162,184,0.1), rgba(32,201,151,0.08));
+            border: 1px solid rgba(23,162,184,0.2);
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+        }
+        .challenge-banner h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+        .challenge-banner p {
+            color: var(--nc-muted);
+            max-width: 600px;
+            margin: 0 auto 28px;
+        }
+
+        /* ─── Team inline ─── */
+        .team-inline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .team-chip {
+            background: var(--nc-glass);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 999px;
+            padding: 6px 16px;
+            font-size: 0.82rem;
+            color: var(--nc-light);
+        }
+
+        /* ─── Footer ─── */
+        footer {
+            padding: 48px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
+        }
+        footer p { color: var(--nc-muted); font-size: 0.82rem; }
+        footer a { color: var(--nc-teal); text-decoration: none; }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .origin-grid, .eval-grid { grid-template-columns: 1fr; }
+            .hero-stats { flex-direction: column; gap: 20px; }
+            .journey-arrow { display: none; }
+            .journey-flow { flex-direction: column; }
+            .journey-step { min-width: 100%; }
+            .section { padding: 64px 0; }
+            .challenge-banner, .problem-statement, .hai-banner { padding: 28px 20px; }
+            .problem-consequences, .hai-pillars { grid-template-columns: 1fr; }
+        }
+
+        /* ─── Fade-in animations ─── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+    <div class="container">
+        <a href="#" class="nav-logo">Nova<span>Care</span></a>
+        <ul class="nav-links">
+            <li><a href="#origin">Origin</a></li>
+            <li><a href="#problem">Problem</a></li>
+            <li><a href="#solution">Solution</a></li>
+            <li><a href="#journey">User Journey</a></li>
+            <li><a href="#deliverables">Deliverables</a></li>
+            <li><a href="#evaluation">Gaps &amp; Next</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge">HUMAN–AI COLLABORATION IN HEALTHCARE</div>
+            <h1>
+                <span>NovaCare</span><br>
+                AI-Assisted Medical<br>Self-Screening
+            </h1>
+            <p class="hero-desc">
+                Nova Scotia's healthcare system is under pressure — long ER waits, overwhelmed phone lines, and thousands without a family doctor. NovaCare is a Human–AI collaboration proof of concept that helps residents assess symptoms, triage urgency, and find care faster.
+            </p>
+            <div class="hero-actions">
+                <a href="https://novacare-screener.lovable.app/" target="_blank" class="btn btn-primary">
+                    Launch App ↗
+                </a>
+                <a href="#problem" class="btn btn-outline">
+                    See the Problem
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div>
+                    <div class="hero-stat-value">4</div>
+                    <div class="hero-stat-label">Triage Pathways</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value">&lt; 1 mo</div>
+                    <div class="hero-stat-label">Idea to Prototype</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value">6</div>
+                    <div class="hero-stat-label">Team Members</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value">10+</div>
+                    <div class="hero-stat-label">Deliverables</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── ORIGIN ─── -->
+<section class="section" id="origin">
+    <div class="container">
+        <div class="section-label fade-up">Where It Started</div>
+        <h2 class="section-title fade-up">From Challenge NS to the Classroom</h2>
+        <p class="section-subtitle fade-up">
+            This project began as a Challenge Nova Scotia 2025 submission (Team 59, November 14) on the theme of Human–AI Collaboration in Healthcare. We explored four AI-in-healthcare ideas, then scoped down to one actionable concept and built it as a full class project in under a month.
+        </p>
+        <div class="origin-grid">
+            <div class="origin-card fade-up">
+                <div class="origin-icon icon-blue">💡</div>
+                <h3>Challenge NS Infographic</h3>
+                <p>Our original submission explored four Human–AI collaboration ideas for Nova Scotia healthcare: robotic surgery, telemedicine, predictive care, and early disease detection — positioning the province as a leader in modern care delivery.</p>
+            </div>
+            <div class="origin-card fade-up">
+                <div class="origin-icon icon-green">🎯</div>
+                <h3>Scoped to One Idea</h3>
+                <p>We narrowed to a single concept: an AI-assisted medical self-screening tool that could triage symptoms, reduce unnecessary ER visits, and support access to care for all Nova Scotians.</p>
+            </div>
+            <div class="origin-card fade-up">
+                <div class="origin-icon icon-orange">👥</div>
+                <h3>Team 59</h3>
+                <p>Six NSCC IT Campus students — spanning Business Intelligence &amp; Analytics and Information Technology — brought together skills in BA, BI, development, and UX design.</p>
+                <div class="team-inline">
+                    <span class="team-chip">Juliana Ayide</span>
+                    <span class="team-chip">Chibuzor Opara</span>
+                    <span class="team-chip">Morgan Garnier</span>
+                    <span class="team-chip">Ann Mwangi</span>
+                    <span class="team-chip">Edward Murray</span>
+                    <span class="team-chip">Michael Okafor</span>
+                </div>
+            </div>
+            <div class="origin-card fade-up">
+                <div class="origin-icon icon-red">⚡</div>
+                <h3>Built on Lovable</h3>
+                <p>With no dedicated web developer on the team, we used Lovable.dev to prototype the app rapidly. The PRD, decision trees, and use cases drove the build — Human–AI collaboration in practice.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PROBLEM ─── -->
+<section class="section" id="problem">
+    <div class="container">
+        <div class="section-label fade-up">The Problem</div>
+        <h2 class="section-title fade-up">A Healthcare System Under Strain</h2>
+
+        <!-- Problem Statement Block -->
+        <div class="problem-statement fade-up">
+            <h3>Problem Statement</h3>
+            <p>Nova Scotia faces a healthcare accessibility crisis. Emergency rooms are overwhelmed with non-urgent visits, driving average wait times to 3.5 hours — and over 10 hours in congested areas. The 811 tele-nurse service, designed as a first line of guidance, reports callback delays exceeding 4 hours. Meanwhile, over 87,000 Nova Scotians (8.2% of the population) remain on the waitlist for a family doctor, leaving them without a primary care pathway entirely.</p>
+            <p>The result: residents are uncertain where to go, when to go, and how urgently they need care. Non-urgent patients flood emergency departments. People who need urgent attention wait alongside those who don't. And the system strains further under the load.</p>
+            <p>NovaCare was designed to address this gap — an AI-assisted self-screening tool that helps residents assess their symptoms, understand the urgency of their condition, and get routed to the right level of care before they walk into an ER or dial 811.</p>
+        </div>
+
+        <!-- The Numbers -->
+        <div class="section-label fade-up" style="margin-bottom: 20px;">The Numbers</div>
+        <div class="problem-stats">
+            <div class="problem-stat fade-up">
+                <div class="big-num">3.5 hrs</div>
+                <div class="stat-desc">Average ER wait time — up to 10+ hours in congested areas</div>
+            </div>
+            <div class="problem-stat fade-up">
+                <div class="big-num">4+ hrs</div>
+                <div class="stat-desc">Reported 811 tele-nurse callback times</div>
+            </div>
+            <div class="problem-stat fade-up">
+                <div class="big-num">87,000+</div>
+                <div class="stat-desc">Nova Scotians on the waitlist for a family doctor (8.2%)</div>
+            </div>
+            <div class="problem-stat fade-up">
+                <div class="big-num">39 days</div>
+                <div class="stat-desc">Wait time for the Ambulatory Care Clinic</div>
+            </div>
+        </div>
+
+        <!-- Consequences -->
+        <div class="problem-consequences">
+            <div class="consequence fade-up">
+                <div class="consequence-icon">🏥</div>
+                <h4>ER Overcrowding</h4>
+                <p>Non-urgent visits consume resources meant for emergencies, creating a cycle of longer waits for everyone.</p>
+            </div>
+            <div class="consequence fade-up">
+                <div class="consequence-icon">❓</div>
+                <h4>Care Pathway Uncertainty</h4>
+                <p>Without a family doctor, residents lack guidance on whether their condition needs an ER, a clinic, a pharmacy, or rest at home.</p>
+            </div>
+            <div class="consequence fade-up">
+                <div class="consequence-icon">🌊</div>
+                <h4>Rural &amp; Underserved Gaps</h4>
+                <p>Communities outside Halifax face even greater barriers — fewer facilities, longer travel, and less access to timely guidance.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── SOLUTION / FEATURES ─── -->
+<section class="section" id="solution">
+    <div class="container">
+        <div class="section-label fade-up">The Solution</div>
+        <h2 class="section-title fade-up">Four Triage Pathways</h2>
+        <p class="section-subtitle fade-up">
+            NovaCare guides users through symptom assessment and routes them to one of four care pathways, with red-flag detection for emergencies. The AI handles pattern recognition and follow-up questions — the human makes the final decision.
+        </p>
+        <div class="features-grid">
+            <div class="feature-card emergency fade-up">
+                <div class="triage-tag tag-red">Emergency</div>
+                <h3>Immediate ER / 911</h3>
+                <p>Red-flag symptoms like severe chest pain, difficulty breathing, or loss of consciousness trigger an immediate emergency screen with a direct 911 call link. No further screening — user safety first.</p>
+            </div>
+            <div class="feature-card urgent fade-up">
+                <div class="triage-tag tag-orange">Urgent</div>
+                <h3>Contact 811 or Visit ER</h3>
+                <p>Conditions requiring professional assessment but not immediately life-threatening. Users get direct links to 811 and nearby clinics with wait time information.</p>
+            </div>
+            <div class="feature-card moderate fade-up">
+                <div class="triage-tag tag-blue">Moderate</div>
+                <h3>Clinic or Virtual Consult</h3>
+                <p>Conditions that benefit from professional consultation within 24–48 hours. Self-care tips provided alongside clinic and pharmacy locators.</p>
+            </div>
+            <div class="feature-card selfcare fade-up">
+                <div class="triage-tag tag-green">Self-Care</div>
+                <h3>Home Remedies &amp; OTC</h3>
+                <p>Symptoms manageable at home with rest, hydration, and over-the-counter medication. Clear escalation guidance if the condition changes.</p>
+            </div>
+        </div>
+
+        <!-- Human-AI Collaboration Banner -->
+        <div class="hai-banner fade-up">
+            <h3>Human–AI Collaboration, Not Replacement</h3>
+            <p>NovaCare is built on the principle that AI should augment human judgment — never replace it. The tool assists with symptom pattern recognition, triage logic, and care routing, but every recommendation includes clear disclaimers, escalation pathways, and encouragement to seek professional advice. Health officials remain the final authority.</p>
+            <div class="hai-pillars">
+                <div class="hai-pillar">
+                    <div class="pillar-icon">🤖</div>
+                    <h4>AI Handles</h4>
+                    <p>Symptom parsing, pattern matching, follow-up question logic, triage scoring</p>
+                </div>
+                <div class="hai-pillar">
+                    <div class="pillar-icon">🧑‍⚕️</div>
+                    <h4>Human Decides</h4>
+                    <p>Final care choices, professional oversight, clinical validation, emergency judgment</p>
+                </div>
+                <div class="hai-pillar">
+                    <div class="pillar-icon">🤝</div>
+                    <h4>Together</h4>
+                    <p>Faster triage, reduced system strain, empowered patients, supervised by health officials</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── USER JOURNEY ─── -->
+<section class="section" id="journey">
+    <div class="container">
+        <div class="section-label fade-up">User Flow</div>
+        <h2 class="section-title fade-up">How It Works</h2>
+        <p class="section-subtitle fade-up">
+            A guided path from launch to recommendation — designed to feel conversational, not clinical.
+        </p>
+        <div class="journey-flow fade-up">
+            <div class="journey-step">
+                <div class="step-num">01</div>
+                <div class="step-label">Open App</div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step">
+                <div class="step-num">02</div>
+                <div class="step-label">Consent &amp; Disclaimer</div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step">
+                <div class="step-num">03</div>
+                <div class="step-label">Choose Path</div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step">
+                <div class="step-num">04</div>
+                <div class="step-label">User Info &amp; Temp</div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step">
+                <div class="step-num">05</div>
+                <div class="step-label">Symptom Input</div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step">
+                <div class="step-num">06</div>
+                <div class="step-label">AI Follow-Up</div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step">
+                <div class="step-num">07</div>
+                <div class="step-label">Triage &amp; Care Rec</div>
+            </div>
+        </div>
+        <div style="margin-top: 48px;">
+            <div class="section-label fade-up" style="margin-bottom: 24px;">Key App Features</div>
+            <div class="origin-grid">
+                <div class="origin-card fade-up">
+                    <div class="origin-icon icon-blue">🏥</div>
+                    <h3>Hospital &amp; Clinic Locator</h3>
+                    <p>Find nearby hospitals with estimated ER wait times and emergency service availability. Geolocation-based search with map view and clickable phone numbers.</p>
+                </div>
+                <div class="origin-card fade-up">
+                    <div class="origin-icon icon-green">💊</div>
+                    <h3>Pharmacy Locator</h3>
+                    <p>Discover nearby pharmacies including primary care clinics. Displays hours, distance, and contact info with direction support via Google Maps.</p>
+                </div>
+                <div class="origin-card fade-up">
+                    <div class="origin-icon icon-orange">🤖</div>
+                    <h3>AI Symptom Assessment</h3>
+                    <p>Conversational AI asks contextual follow-up questions based on reported symptoms, demographics, and medical history — capped at 5–7 questions to avoid fatigue.</p>
+                </div>
+                <div class="origin-card fade-up">
+                    <div class="origin-icon icon-red">🚨</div>
+                    <h3>Red-Flag Detection</h3>
+                    <p>Critical symptoms (chest pain, severe bleeding, loss of consciousness) immediately bypass screening and display emergency guidance with a direct 911 dial link.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── MOSCOW ─── -->
+<section class="section" id="moscow">
+    <div class="container">
+        <div class="section-label fade-up">Prioritization</div>
+        <h2 class="section-title fade-up">MoSCoW Requirements</h2>
+        <p class="section-subtitle fade-up">
+            Requirements scoped and prioritized to drive the initial proof of concept, with clear boundaries on what's in and out for V1.
+        </p>
+        <div class="moscow-grid">
+            <div class="moscow-col must fade-up">
+                <h4>Must Have</h4>
+                <ul>
+                    <li>Digital screening questionnaire</li>
+                    <li>Automated triage results</li>
+                    <li>Secure data storage &amp; encryption</li>
+                    <li>Clear action steps post-screening</li>
+                    <li>Mobile-friendly interface</li>
+                    <li>PHIA-compliant data handling</li>
+                    <li>Basic audit logging</li>
+                </ul>
+            </div>
+            <div class="moscow-col should fade-up">
+                <h4>Should Have</h4>
+                <ul>
+                    <li>Clinician summary dashboard</li>
+                    <li>Error handling &amp; fallback</li>
+                    <li>Exportable screening summaries</li>
+                    <li>Admin interface for questions</li>
+                </ul>
+            </div>
+            <div class="moscow-col could fade-up">
+                <h4>Could Have</h4>
+                <ul>
+                    <li>Multi-language support</li>
+                    <li>Dark mode interface</li>
+                    <li>Optional user accounts</li>
+                    <li>Booking system integration</li>
+                    <li>Progress indicators</li>
+                </ul>
+            </div>
+            <div class="moscow-col wont fade-up">
+                <h4>Won't Have</h4>
+                <ul>
+                    <li>Full EMR integration</li>
+                    <li>AI medical diagnosis</li>
+                    <li>Offline functionality</li>
+                    <li>Wearable device integration</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── DELIVERABLES ─── -->
+<section class="section" id="deliverables">
+    <div class="container">
+        <div class="section-label fade-up">Project Artifacts</div>
+        <h2 class="section-title fade-up">Deliverables</h2>
+        <p class="section-subtitle fade-up">
+            A full BA lifecycle — from charter and stakeholder analysis through to a working prototype, gap analysis, and solution evaluation.
+        </p>
+        <div class="deliverables-grid">
+            <div class="deliverable fade-up">
+                <h4>Project Charter &amp; Scope</h4>
+                <p>Goals, scope boundaries, data sources, and out-of-scope items. Web/app-based AI tool for medical self-screening — no direct diagnosis.</p>
+            </div>
+            <div class="deliverable fade-up">
+                <h4>Stakeholder Register &amp; RACI</h4>
+                <p>Seven stakeholders mapped with power/interest levels. RACI matrix defines roles across a fictional implementation organization.</p>
+            </div>
+            <div class="deliverable fade-up">
+                <h4>MoSCoW Prioritization</h4>
+                <p>Requirements scoped into Must/Should/Could/Won't with pivot table for readability. Drove the proof of concept priorities.</p>
+            </div>
+            <div class="deliverable fade-up">
+                <h4>Business Model Canvas</h4>
+                <p>Key partnerships (NS Health, ER departments, 811), value propositions, customer segments, revenue streams (government &amp; student grants), and cost structures.</p>
+            </div>
+            <div class="deliverable fade-up">
+                <h4>Process Flow — User Journey</h4>
+                <p>End-to-end user flow from app launch to final recommendation. Branching paths by symptom severity with red-flag emergency routing.</p>
+            </div>
+            <div class="deliverable fade-up">
+                <h4>Use Cases (6 total)</h4>
+                <p>Fully described interactions: Enter Symptoms, App Launch, Hospital Information, Pharmacy Information, and more. Preconditions, main flows, alternate flows, and exceptions.</p>
+            </div>
+            <div class="deliverable fade-up">
+                <h4>Product Requirements Document</h4>
+                <p>17-section PRD covering personas, functional requirements, technical architecture, compliance (PIPEDA, PHIA), risk matrix, and phased roadmap.</p>
+            </div>
+            <div class="deliverable fade-up">
+                <h4>Lovable Proof of Concept</h4>
+                <p>Working web app built on Lovable.dev with React frontend and Supabase backend. Decision trees, triage logic, and facility locators for Halifax/HRM.</p>
+            </div>
+            <div class="deliverable fade-up">
+                <h4>Gap Analysis</h4>
+                <p>Identified missing features across Pharmacies tab, Hospitals tab, and Pre-Screen flow — including broken directions, inaccurate wait times, and missing inputs.</p>
+            </div>
+            <div class="deliverable fade-up">
+                <h4>Solution Evaluation</h4>
+                <p>Assessed alignment with original charter. Most backend resources, APIs, and data collection not yet implemented — but highly functional for one month's work.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── GAP / EVAL ─── -->
+<section class="section" id="evaluation">
+    <div class="container">
+        <div class="section-label fade-up">Honest Assessment</div>
+        <h2 class="section-title fade-up">Gaps &amp; Next Steps</h2>
+        <p class="section-subtitle fade-up">
+            We documented what works, what doesn't, and where to take it next.
+        </p>
+        <div class="eval-grid">
+            <div class="eval-card fade-up">
+                <h3>Known Gaps</h3>
+                <ul>
+                    <li>Location locked to Halifax — no postal code or geolocation input</li>
+                    <li>Directions buttons not functional on pharmacy &amp; hospital tabs</li>
+                    <li>Open/closed status and wait time data not live</li>
+                    <li>No back-end database of ailments and symptoms</li>
+                    <li>No data collection, reporting, or analytics pipeline</li>
+                    <li>Consent form exit button unusable</li>
+                    <li>No in-app warning that phone numbers will dial</li>
+                </ul>
+            </div>
+            <div class="eval-card fade-up">
+                <h3>Future Roadmap</h3>
+                <ul>
+                    <li>AI agent for smarter treatment suggestions &amp; symptom identification</li>
+                    <li>Power BI dashboard for operational analytics</li>
+                    <li>Hospital &amp; pharmacy coverage beyond HRM</li>
+                    <li>Google Maps integration for live directions</li>
+                    <li>Multi-language support (French, Arabic, Mi'kmaq)</li>
+                    <li>User accounts and symptom history tracking</li>
+                    <li>Native mobile apps (iOS / Android)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA BANNER ─── -->
+<section class="section">
+    <div class="container">
+        <div class="challenge-banner fade-up">
+            <h3>Human–AI Collaboration, Built for Nova Scotia</h3>
+            <p>
+                From a Challenge Nova Scotia infographic to a working AI-powered screening app — in under one month. This is what happens when students tackle real healthcare problems with business analysis, AI, and a sense of urgency.
+            </p>
+            <a href="https://novacare-screener.lovable.app/" target="_blank" class="btn btn-primary">
+                Try NovaCare ↗
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+    <div class="container">
+        <p>
+            NovaCare is a proof-of-concept student project — not a substitute for professional medical advice.<br>
+            Challenge Nova Scotia 2025 &middot; NSCC IT Campus &middot; Team 59<br>
+            Built with <a href="https://lovable.dev" target="_blank">Lovable</a> &middot; AI assistance via <a href="https://m365.cloud.microsoft/chat/" target="_blank">M365 Copilot</a>
+        </p>
+    </div>
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, i * 80);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
